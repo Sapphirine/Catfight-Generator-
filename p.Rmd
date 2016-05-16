@@ -1,0 +1,52 @@
+---
+title: "Big Data Final Project"
+author: "Haowen Pan, Chen Xu"
+date: "May 12, 2016"
+output: html_document
+---
+
+#Circlize Plot
+###Relationship Among Subritted
+```{r,echo=FALSE,fig.width=6, fig.height=6, warning=FALSE,message=FALSE, cache=FALSE, result=FALSE}
+circle = read.csv("./circulus.csv")
+
+# circlize plot
+devtools::install_github("mattflor/chorddiag")
+library(chorddiag)
+
+m = cor(circle)
+diag(m) = 0
+
+# set the colors
+groupColors <- c("#66C2A5", "#A6D854", "#FFD92F", "#F26223","#FF0000","#E78AC3",
+                 "#FC8D62","#8DA0CB","#FFDD89","#957244")
+
+#plot
+chorddiag(m, groupColors = groupColors, groupnamePadding = 28)
+
+```
+
+
+
+# Network Graph
+### relationship Among Authors
+```{r, echo=FALSE, message=FALSE, cache=FALSE, result=FALSE, warning=FALSE, comment=FALSE, warning=FALSE}
+data=read.csv(file="./d3_results.csv",head=TRUE,sep=",")
+library(networkD3)
+library(ggplot2)
+library(igraph)
+nodes=data[,c(1,2,3:158,159)]
+links=data.frame(expand.grid(nodes$Observation,nodes$Observation))
+link_weight=function(x){
+  s=x['Var1']
+  t=x['Var2']
+  return (sum(nodes[s,][3:158]+nodes[t,][3:158]==2))}
+wt=apply(links,1,link_weight)
+links$wt=wt
+nodes$id=nodes$Observation-1
+nodes=nodes[c(160,2:159)]
+links=links[links$Var1!=links$Var2,]
+links$Var1=links$Var1-1
+links$Var2=links$Var2-1
+forceNetwork(Links = links[links$wt>=9,], Nodes = nodes, Source="Var1", Target="Var2",NodeID = "username", Group = "username",linkWidth = 1,linkColour = "#afafaf",charge=-50)
+```

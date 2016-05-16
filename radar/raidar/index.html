@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+  	<title>Radar charts</title>
+    <script src="http://d3js.org/d3.v3.min.js"></script>
+	<script src="RadarChart.js"></script>
+	<style>
+		body {
+		  margin: 0;
+		  font-size: 14px;
+		  font-family: "Helvetica Neue", Helvetica;
+		}
+		#combined, #others {
+			text-align: center;
+		}
+
+		.chart {
+			background-color: #efefef;
+			display: inline-block;
+			margin-top: 10px;
+			text-align: center;
+		}
+		h1 {
+			margin-bottom: 2px;
+		}
+	</style>
+  </head>
+  <body>
+	<div id="combined">
+		<div class="chart">
+			<h1>Top Subreddits</h1>
+			<div id="chart"></div>
+		</div>
+	</div>
+    <script type="text/javascript" src="script.js"></script>
+  </body>
+</html>
+

@@ -1,0 +1,34 @@
+---
+title: "subreddit - word"
+output: html_document
+---
+
+
+
+
+
+```{r pressure, echo=FALSE,message=FALSE, warning=FALSE}
+setwd("~/Desktop/sanky")
+library(plyr)
+require(googleVis)
+data = read.csv('data2.csv')
+a = count(data,c("subreddit","word"))
+a = a[a$freq>50,]
+N=gvisSankey(a, from="subreddit", 
+           to="subreddit", weight="freq",
+           options=list(
+             height=700, width=800,
+             sankey="{link:{color:{fill:'lightblue'}}}"
+           ))
+
+library(googleVis)
+op <- options(gvis.plot.tag="chart")
+```
+```{r results='asis', echo=FALSE,tidy=TRUE,fig.width=9, fig.height=8}
+
+plot(N)
+
+
+```
+
+

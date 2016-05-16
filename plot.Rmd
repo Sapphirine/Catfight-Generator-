@@ -1,0 +1,90 @@
+
+---
+title: "Big Data Final Project"
+author: "Haowen Pan, Chen Xu"
+date: "May 12, 2016"
+output: html_document
+---
+#Radar Chart
+
+<style>
+#Combined, #others {
+			text-align: center;
+		}
+
+		.chart {
+			background-color: #efefef;
+			display: inline-block;
+			margin-top: 10px;
+			text-align: center;
+		}
+    .chart-title {
+        margin-bottom: 2px;
+    }
+
+</style>
+<script src="http://d3js.org/d3.v3.min.js"></script>
+<script src="RadarChart.js"></script>
+<div id="Combined">
+<div class="chart">
+<h1>Year vs. Subreddit </h1>
+<div id="chart"></div>
+</div>
+</div>
+	
+<script type="text/javascript" src="script.js"></script>
+<div style="margin-bottom:30px"></div>
+
+
+
+
+
+
+
+#Heat Map
+![](/Users/Yanyan/Downloads/vi/filename.jpg)
+
+#Interactive Bubble Plot
+![Demo of playing interactive plot](/Users/Yanyan/Downloads/vi/output.gif )
+
+#Sankey Diagram
+###subreddit - word
+```{r pressure, echo=FALSE,message=FALSE, warning=FALSE}
+library(plyr)
+require(googleVis)
+data = read.csv('./data2.csv')
+a = count(data,c("subreddit","word"))
+a = a[a$freq>50,]
+N=gvisSankey(a, from="subreddit", 
+           to="subreddit", weight="freq",
+           options=list(
+             height=700, width=800,
+             sankey="{link:{color:{fill:'lightblue'}}}"
+           ))
+
+data = read.csv('./data.csv')
+a = count(data,c("subreddit","author"))
+a = a[a$freq>75,]
+M=gvisSankey(a, from="subreddit", 
+           to="subreddit", weight="freq",
+           options=list(
+             height=800, width=800,
+             sankey="{link:{color:{fill:'lightblue'}}}"
+           ))
+
+library(googleVis)
+op <- options(gvis.plot.tag="chart")
+
+```
+```{r results='asis', echo=FALSE,tidy=TRUE,fig.width=9, fig.height=8}
+plot(N)
+```
+###subreddit - author
+
+```{r results='asis', echo=FALSE,tidy=TRUE,fig.width=9, fig.height=8}
+plot(M)
+```
+
+
+
+
